@@ -1,5 +1,7 @@
 import { Link, useParams } from "react-router-dom";
+import EmptyState from "../components/EmptyState.jsx";
 import TeamMemberCard from "../components/TeamMemberCard.jsx";
+import useFavorites from "../hooks/useFavorites.js";
 import { getUserById, users } from "../data/users.js";
 
 function getInitials(name) {
@@ -14,28 +16,19 @@ function getInitials(name) {
 export default function UserProfile() {
   const { id } = useParams();
   const user = getUserById(id);
+  const { isFavorite, toggleFavorite } = useFavorites();
 
   if (!user) {
     return (
-      <div className="flex flex-col items-center rounded-2xl border border-dashed border-slate-300 bg-white px-6 py-16 text-center dark:border-slate-700 dark:bg-slate-900">
-        <span className="flex h-14 w-14 items-center justify-center rounded-full bg-slate-100 text-2xl dark:bg-slate-800">
-          🔍
-        </span>
-        <h1 className="mt-4 text-lg font-semibold text-slate-900 dark:text-white">Member not found</h1>
-        <p className="mt-1 max-w-sm text-sm text-slate-500 dark:text-slate-400">
-          No team member exists with ID “{id}”. It may have been removed or the link
-          is incorrect.
-        </p>
-        <Link
-          to="/team"
-          className="mt-6 inline-flex items-center justify-center rounded-xl bg-slate-900 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-indigo-600 dark:bg-indigo-600 dark:hover:bg-indigo-500"
-        >
-          Back to Team
-        </Link>
-      </div>
+      <EmptyState
+        icon="🔍"
+        title="Member not found"
+        message={`No team member exists with ID "${id}". It may have been removed or the link is incorrect.`}
+      />
     );
   }
 
+  const favorite = isFavorite(user.id);
   const teammates = users.filter((member) => member.id !== user.id).slice(0, 3);
 
   return (
@@ -74,12 +67,26 @@ export default function UserProfile() {
                 {user.role} • {user.department}
               </p>
             </div>
-            <a
-              href={`mailto:${user.email}`}
-              className="inline-flex items-center justify-center rounded-xl bg-slate-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-indigo-600 dark:bg-indigo-600 dark:hover:bg-indigo-500"
-            >
-              Contact
-            </a>
+            <div className="flex flex-wrap items-center gap-2">
+              <button
+                type="button"
+                onClick={() => toggleFavorite(user.id)}
+                aria-pressed={favorite}
+                className={`inline-flex items-center justify-center gap-1.5 rounded-xl px-4 py-2 text-sm font-medium transition active:scale-95 ${
+                  favorite
+                    ? "bg-amber-400 text-white hover:bg-amber-500"
+                    : "border border-slate-300 text-slate-700 hover:border-amber-400 hover:text-amber-600 dark:border-slate-600 dark:text-slate-200 dark:hover:border-amber-400 dark:hover:text-amber-400"
+                }`}
+              >
+                {favorite ? "★ Favorited" : "☆ Favorite"}
+              </button>
+              <a
+                href={`mailto:${user.email}`}
+                className="inline-flex items-center justify-center rounded-xl bg-slate-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-indigo-600 dark:bg-indigo-600 dark:hover:bg-indigo-500"
+              >
+                Contact
+              </a>
+            </div>
           </div>
 
           <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
