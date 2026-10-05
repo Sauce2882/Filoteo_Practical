@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
+import useFavorites from "../hooks/useFavorites.js";
 import useTheme from "../hooks/useTheme.js";
 
 function navLinkClass({ isActive }) {
@@ -13,6 +14,7 @@ function navLinkClass({ isActive }) {
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const { isDark, toggleTheme } = useTheme();
+  const { favoriteCount } = useFavorites();
 
   return (
     <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur dark:border-slate-800 dark:bg-slate-950/90">
@@ -30,6 +32,12 @@ export default function Navbar() {
           </NavLink>
           <NavLink to="/team" className={navLinkClass}>
             Team
+          </NavLink>
+          <NavLink to="/favorites" className={navLinkClass}>
+            Favorites{favoriteCount > 0 ? ` (${favoriteCount})` : ""}
+          </NavLink>
+          <NavLink to="/about" className={navLinkClass}>
+            About
           </NavLink>
         </nav>
 
@@ -65,10 +73,17 @@ export default function Navbar() {
             <NavLink to="/team" className={navLinkClass} onClick={() => setOpen(false)}>
               Team
             </NavLink>
+            <NavLink to="/favorites" className={navLinkClass} onClick={() => setOpen(false)}>
+              Favorites{favoriteCount > 0 ? ` (${favoriteCount})` : ""}
+            </NavLink>
+            <NavLink to="/about" className={navLinkClass} onClick={() => setOpen(false)}>
+              About
+            </NavLink>
           </div>
         </nav>
       )}
     </header>
   );
 }
+
 
