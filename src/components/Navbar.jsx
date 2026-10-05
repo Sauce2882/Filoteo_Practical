@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
+import FavoritesButton from "./FavoritesButton.jsx";
+import ThemeToggle from "./ThemeToggle.jsx";
 import useFavorites from "../hooks/useFavorites.js";
-import useTheme from "../hooks/useTheme.js";
 
 function navLinkClass({ isActive }) {
   return `rounded-lg px-3 py-2 text-sm font-medium transition ${
@@ -13,7 +14,6 @@ function navLinkClass({ isActive }) {
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
-  const { isDark, toggleTheme } = useTheme();
   const { favoriteCount } = useFavorites();
 
   return (
@@ -42,15 +42,8 @@ export default function Navbar() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={toggleTheme}
-            aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
-            title={isDark ? "Switch to light mode" : "Switch to dark mode"}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 text-lg text-slate-700 transition hover:bg-slate-100 dark:border-slate-700 dark:text-amber-300 dark:hover:bg-slate-800"
-          >
-            {isDark ? "☀️" : "🌙"}
-          </button>
+          <FavoritesButton />
+          <ThemeToggle />
 
           <button
             type="button"
@@ -85,5 +78,6 @@ export default function Navbar() {
     </header>
   );
 }
+
 
 
