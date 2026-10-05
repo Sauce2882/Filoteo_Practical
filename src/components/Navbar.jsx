@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import FavoritesButton from "./FavoritesButton.jsx";
 import ThemeToggle from "./ThemeToggle.jsx";
-import useFavorites from "../hooks/useFavorites.js";
 
 function navLinkClass({ isActive }) {
   return `rounded-lg px-3 py-2 text-sm font-medium transition ${
@@ -14,7 +13,6 @@ function navLinkClass({ isActive }) {
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
-  const { favoriteCount } = useFavorites();
 
   return (
     <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur dark:border-slate-800 dark:bg-slate-950/90">
@@ -28,13 +26,10 @@ export default function Navbar() {
 
         <nav className="hidden items-center gap-1 md:flex">
           <NavLink to="/" className={navLinkClass} end>
-            Dashboard
+            Home
           </NavLink>
           <NavLink to="/team" className={navLinkClass}>
             Team
-          </NavLink>
-          <NavLink to="/favorites" className={navLinkClass}>
-            Favorites{favoriteCount > 0 ? ` (${favoriteCount})` : ""}
           </NavLink>
           <NavLink to="/about" className={navLinkClass}>
             About
@@ -61,13 +56,10 @@ export default function Navbar() {
         <nav className="border-t border-slate-200 bg-white px-4 py-3 md:hidden dark:border-slate-800 dark:bg-slate-950">
           <div className="flex flex-col gap-1">
             <NavLink to="/" className={navLinkClass} end onClick={() => setOpen(false)}>
-              Dashboard
+              Home
             </NavLink>
             <NavLink to="/team" className={navLinkClass} onClick={() => setOpen(false)}>
               Team
-            </NavLink>
-            <NavLink to="/favorites" className={navLinkClass} onClick={() => setOpen(false)}>
-              Favorites{favoriteCount > 0 ? ` (${favoriteCount})` : ""}
             </NavLink>
             <NavLink to="/about" className={navLinkClass} onClick={() => setOpen(false)}>
               About
@@ -78,6 +70,7 @@ export default function Navbar() {
     </header>
   );
 }
+
 
 
 

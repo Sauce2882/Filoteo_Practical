@@ -1,12 +1,9 @@
 import { Link } from "react-router-dom";
 import TeamMemberCard from "../components/TeamMemberCard.jsx";
-import useFavorites from "../hooks/useFavorites.js";
 import { users } from "../data/users.js";
 
 export default function Dashboard() {
-  const { favoriteCount, favorites } = useFavorites();
   const featured = users.slice(0, 3);
-  const recentFavorites = users.filter((user) => favorites.includes(user.id)).slice(0, 3);
   const totalMembers = users.length;
   const departments = [...new Set(users.map((user) => user.department))];
   const totalDepartments = departments.length;
@@ -15,7 +12,7 @@ export default function Dashboard() {
   const stats = [
     { label: "Team members", value: totalMembers, to: "/team" },
     { label: "Departments", value: totalDepartments, to: "/team" },
-    { label: "Favorites", value: favoriteCount, to: "/favorites" },
+    { label: "Roles", value: totalRoles, to: "/team" },
   ];
 
   return (
@@ -37,8 +34,7 @@ export default function Dashboard() {
         </h1>
         <p className="relative mt-3 max-w-2xl text-sm leading-relaxed text-indigo-100 sm:text-base">
           Browse {totalMembers} members across {totalDepartments} departments and{" "}
-          {totalRoles} roles. Search, filter, save favorites, and open any profile for
-          full details.
+          {totalRoles} roles. Search, filter, and open any profile for full details.
         </p>
         <div className="relative mt-6 flex flex-wrap gap-3">
           <Link
@@ -46,12 +42,6 @@ export default function Dashboard() {
             className="inline-flex items-center justify-center rounded-xl bg-white px-5 py-2.5 text-sm font-semibold text-indigo-700 shadow transition hover:bg-indigo-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-indigo-700"
           >
             View Team Directory →
-          </Link>
-          <Link
-            to="/favorites"
-            className="inline-flex items-center justify-center rounded-xl border border-white/40 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-white/10"
-          >
-            ★ Favorites ({favoriteCount})
           </Link>
           <Link
             to="/about"
@@ -97,32 +87,6 @@ export default function Dashboard() {
         </div>
         <div className="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {featured.map((user) => (
-            <TeamMemberCard key={user.id} user={user} />
-          ))}
-        </div>
-      </section>
-
-      <section>
-        <div className="flex items-end justify-between gap-4">
-          <div>
-            <h2 className="text-xl font-bold text-slate-900 dark:text-white">
-              {recentFavorites.length > 0 ? "Your favorites" : "Recently viewed idea"}
-            </h2>
-            <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
-              {recentFavorites.length > 0
-                ? "Quick access to members you starred."
-                : "Star any member to pin them here and on the Favorites page."}
-            </p>
-          </div>
-          <Link
-            to="/favorites"
-            className="shrink-0 rounded-lg px-3 py-2 text-sm font-semibold text-indigo-600 transition hover:bg-indigo-50 hover:text-indigo-800 dark:text-indigo-400 dark:hover:bg-slate-800 dark:hover:text-indigo-300"
-          >
-            Open favorites →
-          </Link>
-        </div>
-        <div className="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {(recentFavorites.length > 0 ? recentFavorites : users.slice(3, 6)).map((user) => (
             <TeamMemberCard key={user.id} user={user} />
           ))}
         </div>
