@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import useFavorites from "../hooks/useFavorites.js";
 
 const departmentStyles = {
   Engineering: "bg-indigo-100 text-indigo-700 dark:bg-indigo-500/20 dark:text-indigo-300",
@@ -18,28 +19,46 @@ function getInitials(name) {
 }
 
 export default function TeamMemberCard({ user }) {
+  const { isFavorite, toggleFavorite } = useFavorites();
+  const favorite = isFavorite(user.id);
   const badgeClass = departmentStyles[user.department] ?? "bg-slate-100 text-slate-700 dark:bg-slate-700 dark:text-slate-200";
 
   return (
     <article className="group flex flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-lg dark:border-slate-700 dark:bg-slate-900 dark:hover:shadow-black/40">
       <div className="flex items-start gap-4">
-        <img
-          src={user.avatar}
-          alt={`${user.name} avatar`}
-          loading="lazy"
-          onError={(event) => {
-            event.currentTarget.style.display = "none";
-            const fallback = event.currentTarget.nextElementSibling;
-            if (fallback) fallback.style.display = "flex";
-          }}
-          className="h-16 w-16 shrink-0 rounded-full object-cover ring-2 ring-slate-100 dark:ring-slate-700"
-        />
-        <div
-          aria-hidden="true"
-          style={{ display: "none" }}
-          className="h-16 w-16 shrink-0 items-center justify-center rounded-full bg-indigo-600 text-lg font-bold text-white"
-        >
-          {getInitials(user.name)}
+        <div className="relative shrink-0">
+          <img
+            src={user.avatar}
+            alt={`${user.name} avatar`}
+            loading="lazy"
+            onError={(event) => {
+              event.currentTarget.style.display = "none";
+              const fallback = event.currentTarget.nextElementSibling;
+              if (fallback) fallback.style.display = "flex";
+            }}
+            className="h-16 w-16 rounded-full object-cover ring-2 ring-slate-100 dark:ring-slate-700"
+          />
+          <div
+            aria-hidden="true"
+            style={{ display: "none" }}
+            className="h-16 w-16 items-center justify-center rounded-full bg-indigo-600 text-lg font-bold text-white"
+          >
+            {getInitials(user.name)}
+          </div>
+          <button
+            type="button"
+            onClick={() => toggleFavorite(user.id)}
+            aria-label={favorite ? `Remove ${user.name} from favorites` : `Add ${user.name} to favorites`}
+            aria-pressed={favorite}
+            title={favorite ? "Remove from favorites" : "Add to favorites"}
+            className={`absolute -bottom-1 -right-1 flex h-8 w-8 items-center justify-center rounded-full border text-base shadow-sm transition active:scale-95 ${
+              favorite
+                ? "border-amber-300 bg-amber-400 text-white hover:bg-amber-500"
+                : "border-slate-200 bg-white text-slate-400 hover:border-amber-300 hover:text-amber-500 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-400 dark:hover:border-amber-400 dark:hover:text-amber-400"
+            }`}
+          >
+            {favorite ? "★" : "☆"}
+          </button>
         </div>
 
         <div className="min-w-0 flex-1">
@@ -69,3 +88,4 @@ export default function TeamMemberCard({ user }) {
     </article>
   );
 }
+
