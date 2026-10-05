@@ -41,7 +41,7 @@ export default function UserProfile() {
       </Link>
 
       <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900">
-        <div className="h-28 bg-gradient-to-r from-indigo-600 via-violet-600 to-slate-900" />
+        <div className="h-24 border-b border-slate-200 bg-slate-900 dark:border-slate-700" />
         <div className="px-6 pb-6 sm:px-8 sm:pb-8">
           <div className="-mt-10 flex flex-col gap-4 sm:flex-row sm:items-end">
             <img

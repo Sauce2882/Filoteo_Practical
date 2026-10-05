@@ -17,35 +17,31 @@ export default function Dashboard() {
 
   return (
     <div className="space-y-8">
-      <section className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-600 via-indigo-700 to-slate-900 p-8 text-white shadow-lg sm:p-10">
+      <section className="relative overflow-hidden rounded-2xl border border-slate-200 bg-slate-900 p-8 text-white shadow-sm sm:p-10 dark:border-slate-700">
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-white/10 blur-2xl"
+          className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-indigo-600/20 blur-3xl"
         />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -bottom-20 right-24 h-48 w-48 rounded-full bg-indigo-300/20 blur-2xl"
-        />
-        <p className="relative text-sm font-medium uppercase tracking-widest text-indigo-200">
+        <p className="relative text-sm font-medium uppercase tracking-widest text-slate-400">
           Welcome back
         </p>
         <h1 className="relative mt-2 max-w-2xl text-3xl font-bold leading-tight sm:text-4xl">
           Meet the team behind the work
         </h1>
-        <p className="relative mt-3 max-w-2xl text-sm leading-relaxed text-indigo-100 sm:text-base">
+        <p className="relative mt-3 max-w-2xl text-sm leading-relaxed text-slate-300 sm:text-base">
           Browse {totalMembers} members across {totalDepartments} departments and{" "}
           {totalRoles} roles. Search, filter, and open any profile for full details.
         </p>
         <div className="relative mt-6 flex flex-wrap gap-3">
           <Link
             to="/team"
-            className="inline-flex items-center justify-center rounded-xl bg-white px-5 py-2.5 text-sm font-semibold text-indigo-700 shadow transition hover:bg-indigo-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-indigo-700"
+            className="inline-flex items-center justify-center rounded-xl bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
           >
             View Team Directory →
           </Link>
           <Link
             to="/about"
-            className="inline-flex items-center justify-center rounded-xl border border-white/40 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-white/10"
+            className="inline-flex items-center justify-center rounded-xl border border-slate-700 px-5 py-2.5 text-sm font-semibold text-slate-200 transition hover:border-slate-600 hover:bg-slate-800"
           >
             About
           </Link>

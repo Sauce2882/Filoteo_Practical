@@ -2,11 +2,11 @@ import { Link } from "react-router-dom";
 import useFavorites from "../hooks/useFavorites.js";
 
 const departmentStyles = {
-  Engineering: "bg-indigo-100 text-indigo-700 dark:bg-indigo-500/20 dark:text-indigo-300",
-  Design: "bg-pink-100 text-pink-700 dark:bg-pink-500/20 dark:text-pink-300",
-  Product: "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300",
-  Marketing: "bg-violet-100 text-violet-700 dark:bg-violet-500/20 dark:text-violet-300",
-  Data: "bg-amber-100 text-amber-700 dark:bg-amber-500/20 dark:text-amber-300",
+  Engineering: "border-slate-300 bg-slate-100 text-slate-700 dark:border-slate-600 dark:bg-slate-700/50 dark:text-slate-200",
+  Design: "border-slate-300 bg-slate-100 text-slate-700 dark:border-slate-600 dark:bg-slate-700/50 dark:text-slate-200",
+  Product: "border-slate-300 bg-slate-100 text-slate-700 dark:border-slate-600 dark:bg-slate-700/50 dark:text-slate-200",
+  Marketing: "border-slate-300 bg-slate-100 text-slate-700 dark:border-slate-600 dark:bg-slate-700/50 dark:text-slate-200",
+  Data: "border-slate-300 bg-slate-100 text-slate-700 dark:border-slate-600 dark:bg-slate-700/50 dark:text-slate-200",
 };
 
 function getInitials(name) {
@@ -21,7 +21,7 @@ function getInitials(name) {
 export default function TeamMemberCard({ user }) {
   const { isFavorite, toggleFavorite } = useFavorites();
   const favorite = isFavorite(user.id);
-  const badgeClass = departmentStyles[user.department] ?? "bg-slate-100 text-slate-700 dark:bg-slate-700 dark:text-slate-200";
+  const badgeClass = departmentStyles[user.department] ?? "border-slate-300 bg-slate-100 text-slate-700 dark:border-slate-600 dark:bg-slate-700/50 dark:text-slate-200";
 
   return (
     <article className="group flex flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-lg dark:border-slate-700 dark:bg-slate-900 dark:hover:shadow-black/40">
@@ -65,7 +65,7 @@ export default function TeamMemberCard({ user }) {
           <h3 className="truncate text-base font-semibold text-slate-900 dark:text-white">{user.name}</h3>
           <p className="truncate text-sm text-slate-500 dark:text-slate-400">{user.role}</p>
           <span
-            className={`mt-2 inline-block rounded-full px-2.5 py-0.5 text-xs font-medium ${badgeClass}`}
+            className={`mt-2 inline-block rounded-full border px-2.5 py-0.5 text-xs font-medium ${badgeClass}`}
           >
             {user.department}
           </span>
